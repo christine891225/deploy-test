@@ -8,7 +8,7 @@ import bookmarkN from '../icons/bookmark(1).png';
 import likeY from '../icons/heart(1).png';
 import likeN from '../icons/heart.png';
 import { UserContext } from '../App';
-import axios from 'axios';
+import instance from "../axios";
 import { GlobalStyle } from './globalStyle';
 
 
@@ -17,9 +17,6 @@ import { Button} from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 import { AlertDialog, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay} from '@chakra-ui/react'
 
-const instance = axios.create({
-  baseURL: 'http://localhost:4000/api'
-})
 
 const GroupBackgroud = styled.div`
   background-color: #ffffff;

@@ -9,11 +9,7 @@ import { SimpleGrid, Grid } from '@chakra-ui/react'
 import { Center} from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 
-import axios from 'axios'
-
-const instance = axios.create({
-    baseURL: 'http://localhost:4000/api'
-})
+import instance from "../axios";
 
 const SearchCardContainer = styled.div`
   display: flex;

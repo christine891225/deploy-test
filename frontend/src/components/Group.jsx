@@ -8,11 +8,7 @@ import { GlobalStyle } from './globalStyle';
 import { SimpleGrid } from '@chakra-ui/react'
 import { Center } from '@chakra-ui/react'
 
-import axios from 'axios'
-
-const instance = axios.create({
-    baseURL: 'http://localhost:4000/api'
-})
+import instance from '../axios';
 
 const Container = styled.div`
   padding: 1.5vh 3vw 1.5vh 3vw; // 上右下左

@@ -7,10 +7,7 @@ import { UserContext } from '../App';
 import { Grid, GridItem } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react'
 
-import axios from 'axios'
-const instance = axios.create({
-    baseURL: 'http://localhost:4000/api'
-})
+import instance from "../axios";
 
 const Container = styled.div`
   display: flex;

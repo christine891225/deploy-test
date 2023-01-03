@@ -14,11 +14,8 @@ import { Grid, GridItem } from '@chakra-ui/react'
 import { Card } from '@chakra-ui/react'
 import { Image } from '@chakra-ui/react'
 
-import axios from 'axios'
+import instance from '../axios'
 
-const instance = axios.create({
-    baseURL: 'http://localhost:4000/api'
-})
 
 const Container = styled.div`
   cursor: pointer;

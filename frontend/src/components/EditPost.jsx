@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import instance from "../axios";
 import { GlobalStyle } from '../components/globalStyle';
 
 import { Button} from '@chakra-ui/react'
@@ -16,10 +16,6 @@ import {
   AlertTitle,
   AlertDescription,
 } from '@chakra-ui/react'
-
-const instance = axios.create({
-  baseURL: 'http://localhost:4000/api',
-});
 
 const GroupBackgroud = styled.div`
   background-color: #ffffff;
