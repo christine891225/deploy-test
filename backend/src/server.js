@@ -34,10 +34,6 @@ mongoose.connect(
 
 routes(app)
 
-app.get("/api", (req, res) => {
-  res.send("Hello, World!");
-});
-
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
   app.use(express.static(path.join(__dirname, "../frontend", "build")));
