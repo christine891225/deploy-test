@@ -1,0 +1,16 @@
+{
+  "name": "wp1111_final_project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/alanlin24/wp1111_final_project.git",
+  "author": "christine891225 <64571229+christine891225@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "cd frontend && yarn start",
+    "server": "cd backend && yarn server"
+  },
+  "dependencies": {
+    "react-router-dom": "^6.4.4",
+    "styled-components": "^5.3.6"
+  }
+}
