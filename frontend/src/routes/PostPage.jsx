@@ -3,12 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import Post from '../components/Post';
-import axios from 'axios';
+import instance from "../axios";
 import { GlobalStyle } from '../components/globalStyle';
-
-const instance = axios.create({
-  baseURL: 'http://localhost:4000/api'
-})
 
 const PageBackground = styled.div`
   background-color: #e6e1c5;

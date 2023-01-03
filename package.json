@@ -6,11 +6,10 @@
   "author": "christine891225 <64571229+christine891225@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {
+    "install:prod": "cd frontend && yarn install --freeze-lockfile && cd ../backend && yarn install",
     "start": "cd frontend && yarn start",
-    "server": "cd backend && yarn server"
-  },
-  "dependencies": {
-    "react-router-dom": "^6.4.4",
-    "styled-components": "^5.3.6"
+    "server": "cd backend && yarn server",
+    "build": "cd frontend && yarn build",
+    "deploy": "cd backend && yarn deploy"
   }
 }

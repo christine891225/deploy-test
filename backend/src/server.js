@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import routes from './routes'
 import mongoose from 'mongoose'
+import path from 'path'
 require('dotenv').config()
 const app = express()
 
@@ -32,6 +33,19 @@ mongoose.connect(
 })
 
 routes(app)
+
+app.get("/api", (req, res) => {
+  res.send("Hello, World!");
+});
+
+if (process.env.NODE_ENV === "production") {
+  const __dirname = path.resolve();
+  app.use(express.static(path.join(__dirname, "../frontend", "build")));
+  app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../frontend", "build", "index.html"));
+  });
+}
+
 app.listen(port, () => {
     console.log(`Server is up on port ${port}.`)
 })

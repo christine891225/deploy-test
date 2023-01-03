@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LogoIntro from '../components/LogoIntro';
-import axios from 'axios';
+import instance from "../axios";
 import { UserContext } from '../App';
 
 import { Stack } from '@chakra-ui/react'
@@ -14,10 +14,6 @@ import {
   AlertIcon,
   AlertTitle,
 } from '@chakra-ui/react'
-
-const instance = axios.create({
-  baseURL: 'http://localhost:4000/api',
-});
 
 const PageBackground = styled.div`
   background-color: #e6e1c5;
