@@ -54,13 +54,8 @@ export default function SearchCard({
   const navigate = useNavigate();
 
   const handleClick = (e) => {
-    if (e.target.id === "like") {
-      setLike();
-    } else if (e.target.id === "bookmark") {
-      setBookmark();
-    } else {
+    if (e.target.id !== "like" && e.target.id !== "bookmark")
       navPost();
-    }
   }
 
   const navPost = (post_id) => {
@@ -127,7 +122,7 @@ export default function SearchCard({
     await instance
       .get(`/getBookmarkPostsByUserIdPostId/?user_id=${userId}&post_id=${post.post_id}`)
       .then((res) => {
-        console.log("getBookmark", res);
+        // console.log("getBookmark", res);
         if(res.data.contents === null)
           setIsBookmark(false);
         else
@@ -139,7 +134,7 @@ export default function SearchCard({
     await instance
       .get(`/getLikesPostsByUserIdPostId/?user_id=${userId}&post_id=${post.post_id}`)
       .then((res) => {
-        console.log("getLike", res);
+        // console.log("getLike", res);
         if(res.data.contents === null)
           setIsLike(false);
         else
@@ -151,7 +146,7 @@ export default function SearchCard({
     await instance
       .get(`/getUserById/?user_id=${post.author_id}`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setAuthorName(res.data.contents.user_name);
       })
   }
@@ -160,7 +155,7 @@ export default function SearchCard({
     await instance
       .get(`/getLikesByPostId/?post_id=${post.post_id}`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setLikeCount(res.data.contents);
       })
   }
@@ -169,7 +164,7 @@ export default function SearchCard({
     await instance
       .get(`/countBookmarkByPostId/?post_id=${post.post_id}`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setBookmarkCount(res.data.contents);
       })
   }
@@ -180,7 +175,7 @@ export default function SearchCard({
     getBookmark();
     getLikesByPostId();
     countBookmarkByPostId();
-  }, [])
+  }, [post])
 
   return (
     <div>
@@ -236,13 +231,13 @@ export default function SearchCard({
                 <GridItem colSpan={3} colStart={22} justifySelf="center" alignSelf="start" mr={-6} mt={1}>
                   <Grid templateColumns='repeat(5, 1fr)' gap={1}>
                     <GridItem alignSelf="center">
-                      <Image src={isLike? likeY:likeN} alt='like' boxSize="18px" id="like"></Image>
+                      <Image src={isLike? likeY:likeN} alt='like' boxSize="18px" id="like" onClick={() => setLike()}></Image>
                     </GridItem>
                     <GridItem alignSelf="center">
                       <p className='searchCardInfo fig' >{likeCount}</p>
                     </GridItem>
                     <GridItem colSpan={1} alignSelf="center">
-                      <Image src={isBookmark? bookmarkY:bookmarkN} alt='bookmark' boxSize="18px" id="bookmark"></Image>
+                      <Image src={isBookmark? bookmarkY:bookmarkN} alt='bookmark' boxSize="18px" id="bookmark" onClick={() => setBookmark()}></Image>
                     </GridItem>
                     <GridItem colSpan={1} alignSelf="center">
                       <p className='searchCardInfo fig'>{bookmarkCount}</p>

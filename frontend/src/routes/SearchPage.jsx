@@ -31,8 +31,8 @@ export default function SearchPage({
 
 }) {
   
-  const [category, setCategory] = useState(-1)
-  const [sort, setSort] = useState(-1);
+  const [category, setCategory] = useState(0)
+  const [sortItem, setSortItem] = useState(0);
   const [allPosts, setAllPosts] = useState([]);
 
   return (
@@ -41,7 +41,7 @@ export default function SearchPage({
         <NavBar />
         <GroupBackgroud>
           <SimpleGrid rows={2} direction='column'>
-            <SearchContext.Provider value={{category, setCategory, sort, setSort, allPosts, setAllPosts }}>
+            <SearchContext.Provider value={{category, setCategory, sortItem, setSortItem, allPosts, setAllPosts }}>
               <SearchSection />
               <SearchResult />
             </SearchContext.Provider>

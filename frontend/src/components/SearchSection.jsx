@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import filter from "../icons/filter.png";
 import search from "../icons/search.png";
@@ -79,7 +79,7 @@ const Img = styled.div`
 `;
 
 export default function SearchSection({}) {
-  const { category, setCategory, sort, setSort, setAllPosts } =
+  const { category, setCategory, sortItem, setSortItem, setAllPosts } =
     useContext(SearchContext);
   const category_list = [
     "全  部",
@@ -99,19 +99,48 @@ export default function SearchSection({}) {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       console.log(searchString);
-      getPosts(searchString);
-      setSearchString("");
+      if(searchString === "") {
+        getAllPosts();
+      } else {
+        getPosts();
+      }
     }
   };
 
   const getPosts = async () => {
+    console.log("searchString before await", searchString)
     await instance
-      .get("/searchPosts", { params: { search: searchString } })
+      .get("/searchPosts", { params: { search: searchString, filterItem: category, sortItem: sortItem } })
       .then((res) => {
+        console.log("searchString", searchString)
         console.log(res);
         setAllPosts(res.data.contents);
       });
   };
+
+  const getAllPosts = async () => {
+    try {
+        await instance
+          .get(`/getPostByFilterSort/?filterItem=${category}&sortItem=${sortItem}`)
+          .then((res) => {
+            console.log(res);
+            setAllPosts(res.data.contents);
+          });
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    if (searchString !== "")
+      getPosts()
+    else
+      getAllPosts()
+  }, [category, sortItem])
+
+  useEffect(() => {
+    getAllPosts()
+  }, [])
 
   return (
     <div>
@@ -154,17 +183,17 @@ export default function SearchSection({}) {
                 <MenuOptionGroup
                   type="radio"
                   defaultValue={"由近到遠"}
-                  onClick={(e) => setSort(sort_list.indexOf(e.target.value))}
+                  // onClick={(e) => setSort(sort_list.indexOf(e.target.value))}
                 >
                   {sort_list.map((sort_item) =>
-                    sort_list.indexOf(sort_item) === sort ? (
+                    sort_list.indexOf(sort_item) === sortItem ? (
                       <MenuItemOption value={sort_item}>
                         {sort_item}
                       </MenuItemOption>
                     ) : (
                       <MenuItemOption
                         value={sort_item}
-                        onClick={() => setSort(sort_list.indexOf(sort_item))}
+                        onClick={() => setSortItem(sort_list.indexOf(sort_item))}
                       >
                         {sort_item}
                       </MenuItemOption>

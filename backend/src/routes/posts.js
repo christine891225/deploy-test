@@ -1,5 +1,46 @@
 import Posts from "../models/posts.js";
 
+function sort0(a, b) {
+  let dateA = a.post_date;
+  let dateB = b.post_date;
+  if (dateA < dateB) {
+    return 1;
+  } else if (dateB < dateA) {
+    return -1;
+  } else { 
+    return 0; }
+};
+
+function sort1(a, b) {
+  let dateA = a.post_date;
+  let dateB = b.post_date;
+  if (dateA < dateB) {
+    return -1;
+  } else if (dateB < dateA) {
+    return 1;
+  } else { return 0; }
+};
+
+function sort2(a, b) {
+  let likeA = a.likes;
+  let likeB = b.likes;
+  if (likeA < likeB) {
+    return 1;
+  } else if (likeB < likeA) {
+    return -1;
+  } else { return 0; }
+};
+
+function sort3(a, b) {
+  let bookmarkA = a.bookmarks;
+  let bookmarkB = b.bookmarks;
+  if (bookmarkA < bookmarkB) {
+    return 1;
+  } else if (bookmarkB < bookmarkA) {
+    return -1;
+  } else { return 0; }
+};
+
 exports.GetPosts = async (req, res) => {
   try {
     const info = await Posts.find();
@@ -7,15 +48,77 @@ exports.GetPosts = async (req, res) => {
   } catch (error) {
     res.status(403).send({ message: "error", contents: [] });
   }
-};  
+};
+
+exports.GetPostByFilterSort = async (req, res) => {
+  const filterId = req.query.filterItem;
+  const sortId = req.query.sortItem;
+
+  try {
+    if (filterId !== "0") {
+      const info = await Posts
+        .find({
+            category_id: filterId
+        });
+
+      if (sortId === "0") { // 由近到遠
+        res.status(200).send({ message: "success", contents: info.sort(sort0) });
+      } else if (sortId === "1") { // 由遠到近
+        res.status(200).send({ message: "success", contents: info.sort(sort1) });
+      } else if (sortId === "2") { // 按讚數
+        res.status(200).send({ message: "success", contents: info.sort(sort2) });
+      } else if (sortId === "3") { // 收藏數
+        res.status(200).send({ message: "success", contents: info.sort(sort3) });
+      }
+
+    } else {
+      const info = await Posts.find();
+
+      if (sortId === "0") { // 由近到遠
+        res.status(200).send({ message: "success", contents: info.sort(sort0) });
+      } else if (sortId === "1") { // 由遠到近
+        res.status(200).send({ message: "success", contents: info.sort(sort1) });
+      } else if (sortId === "2") { // 按讚數
+        res.status(200).send({ message: "success", contents: info.sort(sort2) });
+      } else if (sortId === "3") { // 收藏數
+        res.status(200).send({ message: "success", contents: info.sort(sort3) });
+      }
+    }
+
+  } catch (error) {
+    res.status(403).send({ message: "error", contents: [] });
+  }
+};
 
 exports.SearchPosts = async (req, res) => {
   const search = req.query.search;
+  const filterId = parseInt(req.query.filterItem);
+  const sortId = parseInt(req.query.sortItem);
   const regex = new RegExp(search, "i");
 
   try {
     const info = await Posts.find({ $or: [ { post_name: regex }, { post_content: regex }, { post_intro: regex }, { tags: regex } ] });
-    res.status(200).send({ message: "success", contents: info });
+    if (filterId === 0) {
+      if (sortId === 0) { // 由近到遠
+        res.status(200).send({ message: "success", contents: info.sort(sort0) });
+      } else if (sortId === 1) { // 由遠到近
+        res.status(200).send({ message: "success", contents: info.sort(sort1) });
+      } else if (sortId === 2) { // 按讚數
+        res.status(200).send({ message: "success", contents: info.sort(sort2) });
+      } else if (sortId === 3) { // 收藏數
+        res.status(200).send({ message: "success", contents: info.sort(sort3) });
+      }
+    } else {
+      if (sortId === 0) { // 由近到遠
+        res.status(200).send({ message: "success", contents: info.filter((item) => item.category_id === filterId).sort(sort0) });
+      } else if (sortId === 1) { // 由遠到近
+        res.status(200).send({ message: "success", contents: info.filter((item) => item.category_id === filterId).sort(sort1) });
+      } else if (sortId === 2) { // 按讚數
+        res.status(200).send({ message: "success", contents: info.filter((item) => item.category_id === filterId).sort(sort2) });
+      } else if (sortId === 3) { // 收藏數
+        res.status(200).send({ message: "success", contents: info.filter((item) => item.category_id === filterId).sort(sort3) });
+      }
+    }
   } catch (error) {
     res.status(403).send({ message: "error", contents: [] });
   }

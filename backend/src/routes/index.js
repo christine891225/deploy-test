@@ -56,6 +56,7 @@ function main(app) {
     //Posts
     app.get('/api/searchPosts', wrap(postRoute.SearchPosts))
     app.get('/api/getPosts', wrap(postRoute.GetPosts))
+    app.get('/api/getPostByFilterSort', wrap(postRoute.GetPostByFilterSort))
     app.get('/api/getPostById', wrap(postRoute.GetPostById))
     app.get('/api/getPostsByName', wrap(postRoute.GetPostsByName))
     app.get('/api/getPostsByContent', wrap(postRoute.GetPostsByContent))
