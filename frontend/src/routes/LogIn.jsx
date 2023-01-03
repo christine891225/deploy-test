@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LogoIntro from '../components/LogoIntro';
 import instance from "../axios";
@@ -29,7 +29,6 @@ const Logo = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  cursor: pointer;
 `;
 
 const LogInBox = styled.div`
@@ -75,20 +74,19 @@ export default function LogIn() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [logInSuccess, setLogInSuccess] = useState(false)
-
-  const handleSignIn = () => {
-    console.log('sign in')
-    console.log(email, password)
-  }
-
-  const navHome = () => {
-    navigate('/');
-  }
+  const [clickable, setClickable] = useState(false)
   
   const navRegister = () => {
     navigate('/register');
   }
   
+  useEffect(() => {
+    if( email === "" || password === "" )
+      setClickable(false) 
+    else
+      setClickable(true)
+  }, [email, password]);
+
   const Login = async () => {
     const response = await instance.post('login/', {
       user_email: email,
@@ -108,6 +106,16 @@ export default function LogIn() {
     }
   }
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if(!clickable) {
+        alert('請輸入信箱與密碼');
+      } else {
+        Login();
+      }
+    }
+  };
+
   return (
     <div>
       <PageBackground>
@@ -117,19 +125,19 @@ export default function LogIn() {
           <AlertTitle>登入成功</AlertTitle>
         </Alert>
         ):(<></>)}
-        <Logo onClick={navHome} >
+        <Logo>
             <LogoIntro description={true}/>
         </Logo>
         <LogInBox>
             <InputGroup style = {inputGroupStyle}>
               <InputLeftAddon style={leftStyle} backgroundColor='#001C55' color='white' children='信箱' />
-              <Input onChange={(e) => {setEmail(e.target.value)}}/>
+              <Input onKeyDown={handleKeyDown} onChange={(e) => {setEmail(e.target.value)}}/>
             </InputGroup>
             <InputGroup style = {inputGroupStyle}>
               <InputLeftAddon style={leftStyle} backgroundColor='#001C55' color='white' children='密碼' />
-              <Input type='password' onChange={(e) => {setPassword(e.target.value)}}/>
+              <Input onKeyDown={handleKeyDown} type='password' onChange={(e) => {setPassword(e.target.value)}}/>
             </InputGroup>
-            <Button size='md' variant='solid' style={btnStyle} onClick={Login}>登入</Button>
+            <Button size='md' variant='solid' style={btnStyle} onClick={Login} disabled={!clickable}>登入</Button>
             <Stack spacing={5} direction='row'>
                 <p>新朋友？</p>
                 <Text onClick={navRegister} as='u' style={textbtnStyle}>

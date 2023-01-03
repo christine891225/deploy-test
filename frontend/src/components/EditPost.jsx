@@ -21,7 +21,7 @@ const GroupBackgroud = styled.div`
   background-color: #ffffff;
   width: 95vw;
   margin-top: 4vh;
-  margin-bottom: 4vh;
+  margin-bottom: 6vh;
   padding-top: 1vh;
 `;
 

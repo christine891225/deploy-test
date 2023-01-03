@@ -25,6 +25,7 @@ const TagContainer = styled.div`
   display-direction: row;
   flex-wrap: wrap;
   height: 18vh;
+  align-content: start;
 `;
 
 const Tag = styled.div`
@@ -169,6 +170,15 @@ export default function SearchCard({
       })
   }
 
+  const createSubTags = (arr) => {
+    let subArr = []
+    for(var i = 0; i < arr.length; i++){
+      if(i < 4)
+        subArr.push(arr[i])
+    }
+    return subArr
+  }
+
   useEffect(() => {
     getAuthorName();
     getLike();
@@ -217,7 +227,7 @@ export default function SearchCard({
                 <GridItem colSpan={4} justifySelf="start" alignSelf="start">
                     <TagContainer>
                       {
-                        post.tags.map((tag) => (
+                        createSubTags(post.tags).map((tag) => (
                           <Tag className='cardTags'># {tag}</Tag>
                         ))
                       }

@@ -1,4 +1,5 @@
 import Users from '../models/users';
+import bcrypt from 'bcrypt';
 
 exports.GetUsers = async (req, res) => {
     try {
@@ -76,26 +77,44 @@ exports.DeleteUser = async (req, res) => {
 exports.Login = async (req, res) => {
     const body = req.body;
     try {
+        const hashedPassword = await bcrypt.hash(body.user_password, 10);
+        console.log(hashedPassword);
         const info = await Users.findOne
-            ( { user_email: body.user_email, user_password: body.user_password } );
-        console.log(info);
-        if (info === null) {
-            const exist = await Users.findOne
-                ( { user_email: body.user_email } );
-            if (exist === null) {
-                res.status(200).send({ message: '尚未註冊', contents: [] });
-            }
-            else {
-                res.status(200).send({ message: '密碼錯誤', contents: [] });
-            }
+            ( { user_email: body.user_email } ).then (async function (user) {
+                if (user === null) {
+                    res.status(200).send({ message: '尚未註冊', contents: [] });
+                }else {
+                    bcrypt.compare(body.user_password, user.user_password, function (err, result) {
+                        if (result === true) {
+                            res.status(200).send({ message: 'success', contents: user });
+                        }else {
+                            res.status(200).send({ message: '密碼錯誤', contents: [] });
+                        }
+                    });
+                }
+            });
+        } catch (error) {
+            res.status(403).send({ message: 'error', contents: [] });
         }
-        else {
-            console.log("success");
-            res.status(200).send({ message: 'success', contents: info });
-        }
-    } catch (error) {
-        res.status(403).send({ message: 'error', contents: [] });
-    }
+
+    //     console.log(info);
+    //     if (info === null) {
+    //         const exist = await Users.findOne
+    //             ( { user_email: body.user_email } );
+    //         if (exist === null) {
+    //             res.status(200).send({ message: '尚未註冊', contents: [] });
+    //         }
+    //         else {
+    //             res.status(200).send({ message: '密碼錯誤', contents: [] });
+    //         }
+    //     }
+    //     else {
+    //         console.log("success");
+    //         res.status(200).send({ message: 'success', contents: info });
+    //     }
+    // } catch (error) {
+    //     res.status(403).send({ message: 'error', contents: [] });
+    // }
 }
 
 // exports.CountPostsByUser = async (req, res) => {
@@ -116,5 +135,3 @@ exports.Login = async (req, res) => {
 //     } catch (error) {
 //         res.status(403).send({ message: 'error', contents: [] });
 //     }
-// }
-

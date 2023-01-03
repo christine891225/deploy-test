@@ -92,10 +92,6 @@ const btnStyle_hidden = {
   backgroundColor: '#E6E1C5'
 }
 
-const contentTextStyle = {
-  color: '#001C55'
-}
-
 export default function Post({
   post
 }) {
@@ -329,7 +325,7 @@ export default function Post({
                 </Grid>
               </GridItem>
               {/* 第二部分：tags */}
-              <GridItem colSpan={4} justifySelf="start" alignSelf="start">
+              <GridItem colSpan={4} justifySelf="start" alignSelf="start" mt={4}>
                 <TagContainer>
                   {
                     post.tags.map((tag) => (

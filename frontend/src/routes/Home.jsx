@@ -20,7 +20,7 @@ const PageBackground = styled.div`
 const GroupBackgroud = styled.div`
   background-color: #ffffff;
   width: 95vw;
-  margin-bottom: 4vh;
+  margin-bottom: 6vh;
 `;
 
 export default function Home({

@@ -5,8 +5,9 @@ import GroupPost from "./GroupPost";
 import { UserContext } from '../App';
 import { GlobalStyle } from './globalStyle';
 
-import { SimpleGrid } from '@chakra-ui/react'
-import { Center } from '@chakra-ui/react'
+import { SimpleGrid, Grid } from '@chakra-ui/react'
+import { Center} from '@chakra-ui/react'
+import { Image } from '@chakra-ui/react'
 
 import instance from '../axios';
 
@@ -17,7 +18,7 @@ const Container = styled.div`
 `;
 
 export default function Group({
-  groupName, type, action
+  groupName, type, action, src
 }) {
   const { userId, bookmarkPostCount } = useContext(UserContext);
   const [ posts, setPosts ] = useState([]);
@@ -82,10 +83,16 @@ export default function Group({
     <GlobalStyle>
     <Container>
       <GroupHeader groupName={groupName} />
-      { posts === [] ? (
-        <Center h='200px' color='001C55'>
-          <p className='no_content'>還沒有任何{type}文章 快去{action}吧！</p>
-        </Center>
+      { (posts.length === 0)? (
+        <Grid>
+          <Center color='001C55'>
+            <p className='no_content'>還沒有任何{type}文章 快去{action}吧！</p>
+          </Center>
+          <Center  height='248px' color='001C55'>
+            <Image src={src} alt={src} id={src} boxSize="150px"></Image>
+          </Center>
+        </Grid>
+        
       ): (
         <SimpleGrid columns={4}>
         {

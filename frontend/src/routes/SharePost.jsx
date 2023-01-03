@@ -40,7 +40,7 @@ const GroupBackgroud = styled.div`
   background-color: #ffffff;
   width: 95vw;
   margin-top: 4vh;
-  margin-bottom: 4vh;
+  margin-bottom: 6vh;
   padding-top: 1vh;
 `;
 
@@ -171,6 +171,7 @@ export default function SharePost({}) {
       alert("已發布");
       navigate("/");
     } else if (res.data.message === "內容未填寫完整") {
+      setToShare(false)
       alert("內容未填寫完整");
     } else {
       alert("發佈失敗");
@@ -428,7 +429,7 @@ export default function SharePost({}) {
                     </InputGroup>
                     <p className="hint">
                       <span style={{ color: "red" }}>*</span>
-                      留下個人email等資訊讓其他人找到你是誰，若不願透漏請填「無」
+                      留下個人email等資訊讓其他人找到你是誰，若不願透漏可留空
                     </p>
                   </GridItem>
                 </Grid>

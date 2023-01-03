@@ -4,6 +4,10 @@ import Group from '../components/Group';
 import NavBar from '../components/NavBar';
 import PersonalInfo from '../components/PersonalInfo';
 
+import search from '../icons/searching.png'
+import write from '../icons/write.png'
+
+
 import { SimpleGrid } from '@chakra-ui/react'
 
 const PageBackground = styled.div`
@@ -19,7 +23,7 @@ const PageBackground = styled.div`
 const GroupBackgroud = styled.div`
   background-color: #ffffff;
   width: 95vw;
-  margin-bottom: 2vh;
+  margin-bottom: 6vh;
 `;
 
 
@@ -33,8 +37,8 @@ export default function PersonalPage({
         <PersonalInfo />
         <GroupBackgroud className='Home'>
           <SimpleGrid rows={2} direction='column'>
-            <Group groupName="收藏文章" type={'收藏'} action={'尋找喜愛的貼文'}/>
-            <Group groupName="已發佈文章" type={'已發布'} action={'發布你的第一篇文'}/>
+            <Group groupName="收藏文章" type={'收藏'} action={'尋找喜愛的貼文'} src={search}/>
+            <Group groupName="已發佈文章" type={'已發布'} action={'發布你的第一篇文'} src={write}/>
           </SimpleGrid>
         </GroupBackgroud>
       </PageBackground>

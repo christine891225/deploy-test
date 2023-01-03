@@ -20,7 +20,7 @@ export const GlobalStyle = styled.div`
   // GroupHeader groupName, GroupPost post_name
   & h3 {
     font-family: 'Inder', sans-serif;
-    font-size: 1.25em;
+    font-size: 2em;
     font-weight: bold;
     color: #000000;
   }
@@ -39,7 +39,8 @@ export const GlobalStyle = styled.div`
   // GroupPost card info (time, user)
   .cardInfo {
     font-family: 'Inder', sans-serif;
-    font-size: 0.3em;
+    // font-size: 0.3em;
+    font-size: 15px;
   }
 
   // SearchCard
@@ -87,6 +88,8 @@ export const GlobalStyle = styled.div`
     color: #001C55;
     font-weight: 500;
     font-size: 24px;
+    margin-top: 10vh;
+    margin-bottom: 4vh;
   }
 
   // Register

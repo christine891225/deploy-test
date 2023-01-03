@@ -34,7 +34,7 @@ export default function SearchResult({
             <p className='no_content'>沒有搜尋結果 請嘗試搜尋別的關鍵字</p>
           </Center>
           <Center h='100px' color='001C55'>
-            <Image src={sad} alt='sad' id="sad" boxSize="100px"></Image>
+            <Image src={sad} alt='sad' id="sad" boxSize="150px"></Image>
           </Center>
         </Grid>
       ): (
@@ -44,8 +44,8 @@ export default function SearchResult({
               <p className='no_content'>此分類沒有搜尋結果 請嘗試尋找別的分類</p>
             </Center>
             <Center h='100px' color='001C55'>
-            <Image src={sad} alt='sad' id="sad" boxSize="100px"></Image>
-          </Center>
+              <Image src={sad} alt='sad' id="sad" boxSize="150px"></Image>
+            </Center>
           </Grid>
         ):(
           <SimpleGrid columns={2} spacing={4}>

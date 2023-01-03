@@ -220,13 +220,13 @@ export default function GroupPost({
                 mt={8}
               >
                 <GridItem colSpan={1} alignSelf="center">
-                  <Image src={clock} alt='clock' boxSize="14px"></Image>
+                  <Image src={clock} alt='clock' boxSize="16px"></Image>
                 </GridItem>
                 <GridItem colSpan={3} alignSelf="center">
                   <p className='cardInfo'>{post.post_date.split('T')[0]}</p>
                 </GridItem>
                 <GridItem colSpan={1} alignSelf="center">
-                  <Image src={user} alt='user' boxSize="14px"></Image>
+                  <Image src={user} alt='user' boxSize="16px"></Image>
                 </GridItem>
                 <GridItem colSpan={3} alignSelf="center">
                   <p className='cardInfo'>{author}</p>

@@ -31,7 +31,6 @@ const Logo = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  cursor: pointer;
 `;
 
 const LogInBox = styled.div`
@@ -79,28 +78,28 @@ export default function Register() {
   const [password2, setPassword2] = useState('')
   const [isNTUIM, setIsNTUIM] = useState(true)
   const [valid, setValid] = useState(true)
+  const [clickable, setClickable] = useState(false)
 
   useEffect(() => {
-    if(name.length > 8)
+    if(name.length > 8) 
       setValid(false) 
     else
       setValid(true)
   }, [name]);
-  
-  const navHome = () => {
-    navigate('/');
-  }
+
+  useEffect(() => {
+    if((name === "") || email === "" || password === "" || password2 === "" )
+      setClickable(false) 
+    else
+      setClickable(true)
+  }, [name, email, password, password2]);
 
   const navLogIn = () => {
     navigate('/login');
   }
 
   const createUser = async () => {
-    if (isNTUIM === 'no') {
-      alert('想註冊嗎? 我把註冊的方法都放在臺大資管系了，你去找找看吧!（開玩笑的，註冊成功！）');
-    }
-
-    if (password !== password2) {
+    if(password !== password2) {
       alert('密碼不一致');
       return;
     }
@@ -112,13 +111,28 @@ export default function Register() {
         is_ntuim: isNTUIM,
       })
     if (res.data.message === '註冊成功') {
-      alert('註冊成功');    
-      navigate('/login');
+      if(isNTUIM === 'no'){
+        alert('想註冊嗎? 我把註冊的方法都放在臺大資管系了，你去找找看吧!（開玩笑的，註冊成功！）');
+        navigate('/login');
+      }else{
+        alert('註冊成功'); 
+        navigate('/login'); 
+      }
     } else if (res.data.message === '信箱已註冊') {
       alert('已註冊');
       navigate('/login');
     } else {
       alert('註冊失敗');
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      if(!clickable) {
+        alert('請輸入完整資訊');
+      } else {
+        createUser();
+      }
     }
   };
 
@@ -133,26 +147,26 @@ export default function Register() {
             <AlertDescription>暱稱字元數請勿超過8</AlertDescription>
           </Alert>
         )}
-        <Logo onClick={navHome} >
+        <Logo>
             <LogoIntro description={true}/>
         </Logo>
         <LogInBox>
             <InputGroup style = {inputGroupStyle}>
               <InputLeftAddon style={leftStyle} backgroundColor='#001C55' color='white' children='暱稱' />
-              <Input onChange={(e) => {setName(e.target.value)}}/>
+              <Input onKeyDown={handleKeyDown} onChange={(e) => {setName(e.target.value)}}/>
             </InputGroup>
             <p className='hint r'><span style={{color: 'red'}}>*</span>請勿填寫超過8個字元</p>
             <InputGroup style = {inputGroupStyle}>
               <InputLeftAddon style={leftStyle} backgroundColor='#001C55' color='white' children='信箱' />
-              <Input onChange={(e) => {setEmail(e.target.value)}}/>
+              <Input onKeyDown={handleKeyDown} onChange={(e) => {setEmail(e.target.value)}}/>
             </InputGroup>
             <InputGroup style = {inputGroupStyle}>
               <InputLeftAddon style={leftStyle} backgroundColor='#001C55' color='white' children='密碼' />
-              <Input type="password" onChange={(e) => {setPassword(e.target.value)}}/>
+              <Input onKeyDown={handleKeyDown} type="password" onChange={(e) => {setPassword(e.target.value)}}/>
             </InputGroup>
             <InputGroup style = {inputGroupStyle}>
               <InputLeftAddon style={leftStyle} backgroundColor='#001C55' color='white' children='確認密碼' />
-              <Input type="password" onChange={(e) => {setPassword2(e.target.value)}}/>
+              <Input onKeyDown={handleKeyDown} type="password" onChange={(e) => {setPassword2(e.target.value)}}/>
             </InputGroup>
             <RadioGroup style = {inputGroupStyle} defaultValue='yes'>
               <Stack spacing={5} direction='row'>
@@ -165,7 +179,7 @@ export default function Register() {
                 </Radio>
               </Stack>
             </RadioGroup>
-            <Button size='md' variant='solid' style={btnStyle} onClick={createUser} disabled={!valid} >註冊</Button>
+            <Button size='md' variant='solid' style={btnStyle} onClick={createUser} disabled={!clickable || !valid} >註冊</Button>
             <Stack spacing={5} direction='row'>
                 <p>已經有帳號？</p>
                 <Text onClick={navLogIn} as='u' style={textbtnStyle}>
