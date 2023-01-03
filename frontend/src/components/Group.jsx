@@ -37,9 +37,9 @@ export default function Group({
     let likeA = a.likes;
     let likeB = b.likes;
     if (likeA < likeB) {
-      return -1;
-    } else if (likeB < likeA) {
       return 1;
+    } else if (likeB < likeA) {
+      return -1;
     } else { return 0; }
   };
 
